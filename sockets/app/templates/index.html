@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  Perhaps we coud use React or something else later to send, receive messages
+  and update the UI.
+-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Proof of Concept</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
+  </head>
+  <body>
+    <h1>Proof of Concept</h1>
+    <script type="text/javascript">
+      (function() {
+        var socket = io('/container');
+
+        socket.on('connect', function() {
+          console.log('Client connected')
+          socket.emit(
+              'start',
+              {
+                container_id: "abcdef123456"
+              });
+        });
+
+        socket.on('state_change', function(data) {
+          console.log('got state', data)
+        })
+
+      })();
+    </script>
+  </body>
+</html>
